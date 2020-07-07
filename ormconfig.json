@@ -4,5 +4,9 @@
   "port": 5432,
   "username": "postgres",
   "password": "postgres",
-  "database": "barberio"
+  "database": "barberio",
+  "migrations": ["./src/database/migrations/*.ts"],
+  "cli": {
+    "migrationsDir": "./src/database/migrations"
+  }
 }
