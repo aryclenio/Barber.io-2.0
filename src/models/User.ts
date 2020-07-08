@@ -4,27 +4,22 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
 } from 'typeorm';
-import User from './User';
 
 // Decorators (apenas TS)
 @Entity('appointments')
-class Appointment {
+class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  provider_id: string;
+  name: string;
 
-  // Muitos agendamentos para um usuario
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'provider_id' })
-  provider: User;
+  @Column()
+  password: string;
 
-  @Column('timestamp with time zone')
-  date: Date;
+  @Column()
+  email: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -33,4 +28,4 @@ class Appointment {
   updated_at: Date;
 }
 
-export default Appointment;
+export default User;
