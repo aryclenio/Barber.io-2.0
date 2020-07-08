@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 
 // Decorators (apenas TS)
-@Entity('appointments')
+@Entity('users')
 class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
