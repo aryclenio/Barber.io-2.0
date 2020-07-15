@@ -30,6 +30,7 @@
   ],
   "rules": {
     "react/jsx-props-no-spreading": "off",
+    "no-unused-expressions": "off",
     "prettier/prettier": "error",
     "consistent-return": "off",
     "react/prop-types": "off",
