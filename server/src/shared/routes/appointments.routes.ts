@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { parseISO } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
-import AppointmentsRepository from '../repositories/AppointmentsRepository'; // Repositories são controllers
-import CreateAppointmentService from '../services/CreateAppointmentService';
+import AppointmentsRepository from '../../modules/appointments/repositories/AppointmentsRepository'; // Repositories são controllers
+import CreateAppointmentService from '../../modules/appointments/services/CreateAppointmentService';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 // POST localhost:3333/appointments
 
