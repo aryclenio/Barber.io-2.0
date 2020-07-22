@@ -1,9 +1,9 @@
 import { getRepository } from 'typeorm';
-import User from '../infra/typeorm/entities/User';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
+import User from '../infra/typeorm/entities/User';
 
 interface Request {
   email: string;
@@ -14,6 +14,7 @@ interface Response {
   user: User;
   token: string;
 }
+
 class AuthenticateUserService {
   public async execute({ email, password }: Request): Promise<Response> {
     const usersRepository = getRepository(User);
