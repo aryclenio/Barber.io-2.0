@@ -14,13 +14,11 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": [
-    "prettier",
-    "@typescript-eslint"
-  ],
+  "plugins": ["prettier", "@typescript-eslint"],
   "rules": {
     "camelcase": "off",
     "class-methods-use-this": "off",
+    "no-useless-constructor": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
