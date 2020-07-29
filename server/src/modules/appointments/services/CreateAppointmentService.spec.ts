@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import CreateAppointmentService from './CreateAppointmentService';
 import AppError from '@shared/errors/AppError';
+import CreateAppointmentService from './CreateAppointmentService';
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointentsRepository';
 
 describe('CreateAppointment', () => {
@@ -27,13 +27,13 @@ describe('CreateAppointment', () => {
     const date = new Date(2020, 7, 24, 11);
 
     await createAppointment.execute({
-      date: date,
+      date,
       provider_id: '121314343',
     });
 
-    expect(
+    await expect(
       createAppointment.execute({
-        date: date,
+        date,
         provider_id: '121314343',
       }),
     ).rejects.toBeInstanceOf(AppError);

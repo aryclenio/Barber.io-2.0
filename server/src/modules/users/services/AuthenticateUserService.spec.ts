@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import AuthenticateUserService from './AuthenticateUserService';
 import AppError from '@shared/errors/AppError';
+import AuthenticateUserService from './AuthenticateUserService';
 
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
@@ -46,10 +46,12 @@ describe('CreateUser', () => {
       fakeHashProvider,
     );
 
-    expect(authenticateUser.execute({
-      email: 'johndoe@example.com',
-      password: '123456',
-    })).rejects.toBeInstanceOf(AppError);
+    await expect(
+      authenticateUser.execute({
+        email: 'johndoe@example.com',
+        password: '123456',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 
   it('should not be able to authenticate with wrong password', async () => {
@@ -72,9 +74,11 @@ describe('CreateUser', () => {
       password: '123456',
     });
 
-    expect(authenticateUser.execute({
-      email: 'johndoe@example.com',
-      password: 'wrongPassword',
-    })).rejects.toBeInstanceOf(AppError);
+    await expect(
+      authenticateUser.execute({
+        email: 'johndoe@example.com',
+        password: 'wrongPassword',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
