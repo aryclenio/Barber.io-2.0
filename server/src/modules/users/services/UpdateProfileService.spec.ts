@@ -38,11 +38,13 @@ describe('UpdateProfile', () => {
   });
 
   it('should not be able to update profile from non existing user', async () => {
-    await expect(updateProfile.execute({
-      user_id: 'non existing id',
-      name: 'Non Existing name',
-      email: 'test@example.com'
-    })).rejects.toBeInstanceOf(AppError);
+    await expect(
+      updateProfile.execute({
+        user_id: 'non existing id',
+        name: 'Non Existing name',
+        email: 'test@example.com',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 
   it('should not be able to change to another user email', async () => {
