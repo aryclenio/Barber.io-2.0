@@ -1,11 +1,13 @@
 import { sign } from 'jsonwebtoken';
-import authConfig from '@config/auth';
-import AppError from '@shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
+
+import AppError from '@shared/errors/AppError';
+
+import authConfig from '@config/auth';
+import IUsersRepository from '../repositories/IUsersRepository';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 import User from '../infra/typeorm/entities/User';
-import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
   email: string;
@@ -25,7 +27,7 @@ class AuthenticateUserService {
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
-  ) { }
+  ) {}
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email);
@@ -44,6 +46,7 @@ class AuthenticateUserService {
     }
 
     const { secret, expiresIn } = authConfig.jwt;
+
     const token = sign({}, secret, {
       subject: user.id,
       expiresIn,

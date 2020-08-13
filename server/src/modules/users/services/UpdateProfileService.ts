@@ -1,7 +1,9 @@
 import { injectable, inject } from 'tsyringe';
+
 import AppError from '@shared/errors/AppError';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
+
 import User from '../infra/typeorm/entities/User';
 
 interface IRequest {
@@ -20,7 +22,7 @@ class UpdateProfileService {
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
-  ) { }
+  ) {}
 
   public async execute({
     user_id,
@@ -45,7 +47,9 @@ class UpdateProfileService {
     user.email = email;
 
     if (password && !old_password) {
-      throw new AppError('Old password required');
+      throw new AppError(
+        'You need to inform the old password to update the password',
+      );
     }
 
     if (password && old_password) {
@@ -53,12 +57,11 @@ class UpdateProfileService {
         old_password,
         user.password,
       );
+
       if (!checkOldPassword) {
         throw new AppError('Old password does not match');
       }
-    }
 
-    if (password) {
       user.password = await this.hashProvider.generateHash(password);
     }
 

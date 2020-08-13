@@ -7,9 +7,8 @@ import {
   Generated,
 } from 'typeorm';
 
-// Decorators (apenas TS)
-@Entity('users')
-class User {
+@Entity('user_tokens')
+class UserToken {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -27,4 +26,4 @@ class User {
   updated_at: Date;
 }
 
-export default User;
+export default UserToken;

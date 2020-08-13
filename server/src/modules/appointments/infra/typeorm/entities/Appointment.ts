@@ -7,9 +7,9 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+
 import User from '@modules/users/infra/typeorm/entities/User';
 
-// Decorators (apenas TS)
 @Entity('appointments')
 class Appointment {
   @PrimaryGeneratedColumn('uuid')
@@ -18,7 +18,6 @@ class Appointment {
   @Column()
   provider_id: string;
 
-  // Muitos agendamentos para um usuario
   @ManyToOne(() => User)
   @JoinColumn({ name: 'provider_id' })
   provider: User;

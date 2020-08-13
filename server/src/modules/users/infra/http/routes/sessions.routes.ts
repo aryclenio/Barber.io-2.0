@@ -1,9 +1,11 @@
 import { Router } from 'express';
-import { Segments, celebrate, Joi } from 'celebrate';
+import { celebrate, Segments, Joi } from 'celebrate';
+
 import SessionsController from '../controllers/SessionsController';
 
-const sessionsController = new SessionsController();
 const sessionsRouter = Router();
+
+const sessionsController = new SessionsController();
 
 sessionsRouter.post(
   '/',

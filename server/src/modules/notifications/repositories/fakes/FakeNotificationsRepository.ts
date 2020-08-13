@@ -1,6 +1,8 @@
+import { ObjectID } from 'mongodb';
+
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 import ICreateNotificationDTO from '@modules/notifications/dtos/ICreateNotificationDTO';
-import { ObjectID } from 'mongodb';
+
 import Notification from '../../infra/typeorm/schemas/Notification';
 
 class NotificationsRepository implements INotificationsRepository {
@@ -13,6 +15,7 @@ class NotificationsRepository implements INotificationsRepository {
     const notification = new Notification();
 
     Object.assign(notification, { id: new ObjectID(), content, recipient_id });
+
     this.notifications.push(notification);
 
     return notification;

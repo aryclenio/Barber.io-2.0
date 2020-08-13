@@ -6,9 +6,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+import uploadConfig from '@config/upload';
+
 import { Exclude, Expose } from 'class-transformer';
 
-// Decorators (apenas TS)
 @Entity('users')
 class User {
   @PrimaryGeneratedColumn('uuid')
@@ -18,11 +19,11 @@ class User {
   name: string;
 
   @Column()
-  @Exclude()
-  password: string;
+  email: string;
 
   @Column()
-  email: string;
+  @Exclude()
+  password: string;
 
   @Column()
   avatar: string;
@@ -34,10 +35,19 @@ class User {
   updated_at: Date;
 
   @Expose({ name: 'avatar_url' })
-  get avatar_url(): string | null {
-    return this.avatar
-      ? `${process.env.APP_API_URL}/files/${this.avatar}`
-      : null;
+  getAvatarUrl(): string | null {
+    if (!this.avatar) {
+      return null;
+    }
+
+    switch (uploadConfig.driver) {
+      case 'disk':
+        return `${process.env.APP_API_URL}/files/${this.avatar}`;
+      case 's3':
+        return `https://${uploadConfig.config.aws.bucket}.s3.us-east-2.amazonaws.com/${this.avatar}`;
+      default:
+        return null;
+    }
   }
 }
 
