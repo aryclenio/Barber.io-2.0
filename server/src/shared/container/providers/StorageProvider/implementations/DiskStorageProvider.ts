@@ -9,7 +9,6 @@ class DiskStorageProvider implements IStorageProvider {
       path.resolve(uploadConfig.tmpFolder, file),
       path.resolve(uploadConfig.uploadsFolder, file),
     );
-
     return file;
   }
 
@@ -17,7 +16,6 @@ class DiskStorageProvider implements IStorageProvider {
     const filePath = path.resolve(uploadConfig.uploadsFolder, file);
 
     try {
-      // Verifica o status do arquivo, caso retorne nulo, o arquivo não existe
       await fs.promises.stat(filePath);
     } catch {
       return;
