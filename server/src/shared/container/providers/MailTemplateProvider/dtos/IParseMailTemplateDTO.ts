@@ -1,4 +1,3 @@
-// Hack para receber qualquer coisa como parâmetro
 interface ITemplateVariables {
   [key: string]: string | number;
 }

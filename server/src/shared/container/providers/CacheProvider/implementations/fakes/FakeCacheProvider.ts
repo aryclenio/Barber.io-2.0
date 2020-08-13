@@ -1,10 +1,10 @@
-import ICacheProvider from '../models/ICacheProvider';
+import ICacheProvider from '../../models/ICacheProvider';
 
 interface ICacheData {
   [key: string]: string;
 }
 
-export default class FakeCacheProvider implements ICacheProvider {
+export default class FakeCachePRovider implements ICacheProvider {
   private cache: ICacheData = {};
 
   public async save(key: string, value: any): Promise<void> {
@@ -13,13 +13,10 @@ export default class FakeCacheProvider implements ICacheProvider {
 
   public async recover<T>(key: string): Promise<T | null> {
     const data = this.cache[key];
-
     if (!data) {
       return null;
     }
-
     const parsedData = JSON.parse(data) as T;
-
     return parsedData;
   }
 
@@ -29,7 +26,7 @@ export default class FakeCacheProvider implements ICacheProvider {
 
   public async invalidatePrefix(prefix: string): Promise<void> {
     const keys = Object.keys(this.cache).filter(key =>
-      key.startsWith(`${prefix}`),
+      key.startsWith(`${prefix}:`),
     );
 
     keys.forEach(key => {

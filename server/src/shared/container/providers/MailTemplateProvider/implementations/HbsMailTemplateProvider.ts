@@ -1,14 +1,14 @@
-import handlebars, { template } from 'handlebars';
+import handlebars from 'handlebars';
 import fs from 'fs';
 import IMailTemplateProvider from '../models/IMailTemplateProvider';
 import IParseMailTemplateDTO from '../dtos/IParseMailTemplateDTO';
 
-class HandlebarsTemplateProvider implements IMailTemplateProvider {
+class HbsMailTemplateProvider implements IMailTemplateProvider {
   public async parse({
     file,
     variables,
   }: IParseMailTemplateDTO): Promise<string> {
-    const templateFileContent = fs.promises.readFile(file, {
+    const templateFileContent = await fs.promises.readFile(file, {
       encoding: 'utf-8',
     });
     const parseTemplate = handlebars.compile(templateFileContent);
@@ -16,4 +16,4 @@ class HandlebarsTemplateProvider implements IMailTemplateProvider {
   }
 }
 
-export default HandlebarsTemplateProvider;
+export default HbsMailTemplateProvider;
