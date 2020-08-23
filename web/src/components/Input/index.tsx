@@ -16,7 +16,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon: React.ComponentType<IconBaseProps>;
 }
 
-const Input: React.FC<InputProps> = ({ name, containerStyle, icon: Icon, ...rest }) => {
+const Input: React.FC<InputProps> = ({ name, containerStyle = {}, icon: Icon, ...rest }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);

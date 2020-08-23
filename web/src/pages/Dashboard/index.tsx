@@ -140,7 +140,7 @@ const Dashboard: React.FC = () => {
             <img src={user.avatar_url} alt={user.name} />
             <div>
               <span>Bem-vindo,</span>
-              <Link to='profile'><strong>{user.name}</strong></Link>
+              <Link to='/profile'><strong>{user.name}</strong></Link>
             </div>
           </Profile>
           <button type="button" onClick={signOut}>
