@@ -1,6 +1,12 @@
-import React, { createContext, useCallback, useState, useContext, useEffect } from 'react';
+import React, {
+    createContext,
+    useCallback,
+    useState,
+    useContext,
+    useEffect,
+} from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import api from '../services/api';
-import AsyncStorage from '@react-native-community/async-storage'
 
 interface User {
     id: string;
@@ -11,7 +17,7 @@ interface User {
 
 interface AuthState {
     token: string;
-    user: User
+    user: User;
 }
 
 interface SignInCredentials {
@@ -37,18 +43,19 @@ export const AuthProvider: React.FC = ({ children }) => {
         async function loadStoragedData(): Promise<void> {
             const [token, user] = await AsyncStorage.multiGet([
                 '@Barbeiro:token',
-                '@Barbeiro:user'
+                '@Barbeiro:user',
             ]);
 
             if (token[1] && user[1]) {
+                api.defaults.headers.authorization = `Bearer ${token[1]}`;
+
                 setData({ token: token[1], user: JSON.parse(user[1]) });
             }
 
             setLoading(false);
-
         }
         loadStoragedData();
-    }, [])
+    }, []);
 
     const signIn = useCallback(async ({ email, password }) => {
         const response = await api.post('sessions', {
@@ -59,8 +66,10 @@ export const AuthProvider: React.FC = ({ children }) => {
         const { token, user } = response.data;
         await AsyncStorage.multiSet([
             ['@Barbeiro:token', token],
-            ['@Barbeiro:user', JSON.stringify(user)]
-        ])
+            ['@Barbeiro:user', JSON.stringify(user)],
+        ]);
+
+        api.defaults.headers.authorization = `Bearer ${token}`;
         setData({ token, user });
     }, []);
 
@@ -70,7 +79,9 @@ export const AuthProvider: React.FC = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user: data.user, signIn, signOut, loading }}>
+        <AuthContext.Provider
+            value={{ user: data.user, signIn, signOut, loading }}
+        >
             {children}
         </AuthContext.Provider>
     );
